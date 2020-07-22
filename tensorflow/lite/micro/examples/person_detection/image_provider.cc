@@ -19,6 +19,8 @@ limitations under the License.
 
 TfLiteStatus GetImage(tflite::ErrorReporter* error_reporter, int image_width,
                       int image_height, int channels, uint8_t* image_data) {
+  TF_LITE_REPORT_ERROR(error_reporter, "image_data: %p (size = %d)\n", (void *)image_data, sizeof(image_data));
+  TF_LITE_REPORT_ERROR(error_reporter, "width: %d | height: %d | channels = %d\n", image_width, image_height, channels);
   for (int i = 0; i < image_width * image_height * channels; ++i) {
     image_data[i] = 0;
   }

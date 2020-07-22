@@ -3,12 +3,15 @@ ifeq ($(TARGET), zephyr_vexriscv)
 	export TOOLCHAIN_BASE=${ZEPHYR_SDK_INSTALL_DIR}/riscv64-zephyr-elf/riscv64-zephyr-elf
 	export TOOLCHAIN_VERSION=9.2.0
 	PROJECT_INCLUDES += ${CURDIR} ${TOOLCHAIN_BASE}/include/c++/${TOOLCHAIN_VERSION} ${TOOLCHAIN_BASE}/include ${TOOLCHAIN_BASE}/include/c++/${TOOLCHAIN_VERSION}/riscv64-zephyr-elf/rv32i/ilp32
-
-ZEPHYR_PERSON_DETECTION_SRCS += \
-tensorflow/lite/micro/examples/person_detection/zephyr_riscv/src/image_provider.cc \
-tensorflow/lite/micro/examples/person_detection/zephyr_riscv/src/detection_responder.cc \
-boards/litex_vexriscv.overlay \
-prj.conf
+	ZEPHYR_PERSON_DETECTION_SRCS = \
+	tensorflow/lite/micro/examples/person_detection/detection_responder.cc \
+	tensorflow/lite/micro/examples/person_detection/image_provider.cc \
+	tensorflow/lite/micro/examples/person_detection/main.cc \
+	tensorflow/lite/micro/examples/person_detection/main_functions.cc \
+	tensorflow/lite/micro/examples/person_detection/model_settings.cc \
+	tensorflow/lite/micro/tools/make/downloads/person_model_grayscale/person_detect_model_data.cc \
+	boards/litex_vexriscv.overlay \
+	prj.conf
 
 $(eval $(call generate_project,cmake,zephyr_cmake_project.cmake,person_detection,$(MICROLITE_CC_SRCS) $(THIRD_PARTY_CC_SRCS) $(ZEPHYR_PERSON_DETECTION_SRCS) $(MICROLITE_CC_HDRS) $(THIRD_PARTY_CC_HDRS) $(person_detection_HDRS),,$(LDFLAGS) $(MICROLITE_LIBS),$(CXXFLAGS),$(CCFLAGS),))
 
