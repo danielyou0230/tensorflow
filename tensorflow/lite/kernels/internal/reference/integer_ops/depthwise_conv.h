@@ -60,19 +60,17 @@ inline void DepthwiseConvPerChannel(
 
   for (int batch = 0; batch < batches; ++batch) {
     for (int out_y = 0; out_y < output_height; ++out_y) {
+      const int in_y_origin = (out_y * stride_height) - pad_height;
       for (int out_x = 0; out_x < output_width; ++out_x) {
+        const int in_x_origin = (out_x * stride_width) - pad_width;
         for (int in_channel = 0; in_channel < input_depth; ++in_channel) {
           for (int m = 0; m < depth_multiplier; ++m) {
             const int output_channel = m + in_channel * depth_multiplier;
-            const int in_x_origin = (out_x * stride_width) - pad_width;
-            const int in_y_origin = (out_y * stride_height) - pad_height;
             int32 acc = 0;
             for (int filter_y = 0; filter_y < filter_height; ++filter_y) {
               const int in_y = in_y_origin + dilation_height_factor * filter_y;
               for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
                 const int in_x = in_x_origin + dilation_width_factor * filter_x;
-                // const int in_y =
-                    // in_y_origin + dilation_height_factor * filter_y;
                 // Zero padding by omitting the areas outside the image.
                 const bool is_point_inside_image =
                     (in_x >= 0) && (in_x < input_width) && (in_y >= 0) &&
