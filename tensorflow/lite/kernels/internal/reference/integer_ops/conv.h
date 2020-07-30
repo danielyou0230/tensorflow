@@ -69,16 +69,30 @@ inline void ConvPerChannel(
           const int in_y_origin = (out_y * stride_height) - pad_height;
           int32 acc = 0;
           for (int filter_y = 0; filter_y < filter_height; ++filter_y) {
+            const int in_y = in_y_origin + dilation_height_factor * filter_y;
+            // const int in_y = in_y_origin + filter_y_delta;
+
             for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
+              const int in_x = in_x_origin + dilation_width_factor * filter_x;
+              // const int in_x = in_x_origin + filter_x_delta;
+
+              // Zero padding by omitting the areas outside the image.
+              const bool is_point_inside_image =
+                  (in_x >= 0) && (in_x < input_width) && (in_y >= 0) &&
+                  (in_y < input_height);
+
+              if (!is_point_inside_image)
+                continue;
+
               for (int in_channel = 0; in_channel < input_depth; ++in_channel) {
-                const int in_x = in_x_origin + dilation_width_factor * filter_x;
-                const int in_y =
-                    in_y_origin + dilation_height_factor * filter_y;
+                // const int in_x = in_x_origin + dilation_width_factor * filter_x;
+                // const int in_y =
+                //     in_y_origin + dilation_height_factor * filter_y;
                 // Zero padding by omitting the areas outside the image.
-                const bool is_point_inside_image =
-                    (in_x >= 0) && (in_x < input_width) && (in_y >= 0) &&
-                    (in_y < input_height);
-                if (is_point_inside_image) {
+                // const bool is_point_inside_image =
+                //     (in_x >= 0) && (in_x < input_width) && (in_y >= 0) &&
+                //     (in_y < input_height);
+                // if (is_point_inside_image) {
                   int32 input_val = input_data[Offset(input_shape, batch, in_y,
                                                       in_x, in_channel)];
                   int32 filter_val =
@@ -101,7 +115,7 @@ inline void ConvPerChannel(
                   // TODO(jianlijianli): Add a check to make sure the
                   // accumulator depth is smaller than 2^16.
                   acc += filter_val * (input_val + input_offset);
-                }
+                // }
               }
             }
           }
