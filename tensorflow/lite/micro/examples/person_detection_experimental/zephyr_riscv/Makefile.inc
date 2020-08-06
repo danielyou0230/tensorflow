@@ -10,6 +10,7 @@ ifeq ($(TARGET), zephyr_vexriscv)
 	tensorflow/lite/micro/examples/person_detection_experimental/zephyr_riscv/src/main_functions.cc \
 	tensorflow/lite/micro/examples/person_detection_experimental/model_settings.cc \
 	tensorflow/lite/micro/tools/make/downloads/person_model_int8/person_detect_model_data.cc \
+	tensorflow/lite/micro/tools/make/downloads/person_model_int8/person_image_data.cc \
 	boards/litex_vexriscv.overlay \
 	prj.conf
 
