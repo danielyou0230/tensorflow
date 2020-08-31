@@ -100,13 +100,3 @@ stack*
 ```
 
 ![image](https://user-images.githubusercontent.com/21079720/91755189-8bf9cf80-eb7f-11ea-884c-2354f3470271.png)
-
-
-## reverse_xxd_dump_from_cc.py
-Reverse the xxd dump C++ array source file (`*.cc`) back to the origin binary file. 
-
-This script is used to convert models with only xxd dumped C++ source file to the binary model weight file and analyze it with model visualizer like [Netron](https://github.com/lutzroeder/netron) or load the model in TensorFlow Python API to evaluate the results with Python.
-
-```
-python reverse_xxd_dump_from_cc.py [*.cc]
-```
