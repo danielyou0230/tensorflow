@@ -19,8 +19,7 @@ Include (`include` or `i` for short) the renode script (`*.resc`), DO NOT start 
 The symbol `@` is the path where Renode is installed, you can navigate to anywhere on the disk as long as you follow the linux syntax (`../` for parent directory, etc.), here I install Renode under home (`/home/$USER` or `~/`) directory and I put the demo repository litex-vexriscv-tensorflow-lite-demo under home directory.
 
 ```
-i @../litex-vexriscv-tensorflow-lite-demo/renode/litex-vexriscv-
-tflite.resc
+i @../litex-vexriscv-tensorflow-lite-demo/renode/litex-vexriscv-tflite.resc
 ```
 
 ### Start GDB server on Renode on port 8833
@@ -29,7 +28,7 @@ machine StartGdbServer 8833
 ```
 
 ### Launch GDB
-First you need to find a proper GDB executable for your target architecture, here, we will follow Antmicro's repo and use the riscv GDB from zephyr
+First you need to find a proper GDB executable for your target architecture, here, we will follow Antmicro's repo and use the riscv GDB executable from zephyr
 
 Usage:
 ```
@@ -74,6 +73,8 @@ Since we are redirecting the gdb interrupt messages to the file `<path-you-run-g
 python log_parser.py profile.txt --visualize --top=7
 ```
 
+![image](https://user-images.githubusercontent.com/21079720/91755127-75537880-eb7f-11ea-89e3-fe6704c41c8a.png)
+
 #### Get the statistic of the function call hierarchy
 To get a more detail view of how the entire function call stack looks like and how many time the function is called with the exact same call stack, we can add another option `--full-trace` to the script and it will generate a `*.json` file for the complete call stack trace.
 ```
@@ -97,6 +98,9 @@ stack*
 |-- counts: 5 # Number of occurence with the exact same call stack
 |-- [list of functions in the call stack]
 ```
+
+![image](https://user-images.githubusercontent.com/21079720/91755189-8bf9cf80-eb7f-11ea-884c-2354f3470271.png)
+
 
 ## reverse_xxd_dump_from_cc.py
 Reverse the xxd dump C++ array source file (`*.cc`) back to the origin binary file. 
